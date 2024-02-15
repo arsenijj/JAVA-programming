@@ -7,7 +7,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class FileChooser {
       
-    public static String main(String[] args){
+    public static String choser(){
         
     
         // assertTrue(userDirectory.endsWith());
