@@ -29,19 +29,6 @@ public class SortByPredicate {
         }
     }
 
-    // public static <T> ArrayList<T> filter(ArrayList<T> list, Predicate<T> predicate){
-    //     ArrayList<T> filtered = new ArrayList<>();
-    //     for (T element : list){
-    //         if (predicate.test(element)){
-    //             filtered.add(element);
-    //         }
-    //     }
-    //     return filtered;
-    // }
-
-
-    
-    
     public static void main(String[] args) throws IOException {
 
         new FileChooser();
