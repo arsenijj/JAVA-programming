@@ -1,7 +1,6 @@
 package task3.SortingByManyParameters;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -11,7 +10,6 @@ import task1.FileChooser;
 import java.util.*;
 import java.util.Collections;
 
-// Name | Surname | SursurName | Company | Rate
 public class Sort {
 
     static Comparator<ArrayList<String>> comparator = new Comparator<ArrayList<String>>() {
@@ -27,20 +25,19 @@ public class Sort {
         }
     };
 
-        public static void write(String path, ArrayList<ArrayList<String>> data){
-            try (FileWriter writer = new FileWriter(path)){
-                for (ArrayList<String> row : data){
-                    for (String item: row){
-                        writer.write(item + " ");
-                    }
-                    writer.write("\n");
+    public static void write(String path, ArrayList<ArrayList<String>> data) {
+        try (FileWriter writer = new FileWriter(path)) {
+            for (ArrayList<String> row : data) {
+                for (String item : row) {
+                    writer.write(item + " ");
                 }
-                System.out.println("Data has already written to the distanation file.");
-            } catch (IOException e){
-                System.out.println("Some trouble has occured while writing result data.");
+                writer.write("\n");
             }
+            System.out.println("Data has already written to the distanation file.");
+        } catch (IOException e) {
+            System.out.println("Some trouble has occured while writing result data.");
         }
-    
+    }
 
     public static void main(String[] args) throws IOException {
 
