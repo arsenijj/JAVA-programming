@@ -1,13 +1,20 @@
 --1. TABLE employeesAge
-drop TABLE employeesAge
-DELETE from
-	public.employeesAge CREATE TABLE employeesAge (
-		id SERIAL PRIMARY KEY,
-		employeeName VARCHAR(50),
-		age INTEGER
-	);
 
-DO $ $ BEGIN FOR i in 1..10000 LOOP
+
+CREATE TABLE employeesAge (
+	id SERIAL PRIMARY KEY,
+	employeeName VARCHAR(50),
+	age INTEGER
+);
+
+DROP TABLE employeesAge;
+
+DELETE FROM
+	public.employeesAge;
+
+DO 
+
+$ $ BEGIN FOR i in 1..10000 LOOP
 INSERT INTO
 	employeesAge (employeeName, age)
 SELECT
@@ -38,15 +45,19 @@ END LOOP;
 
 END;
 
-$ $ --2. TABLE departmentSalary
-drop TABLE departmentSalary
-DELETE from
-	public.departmentSalary CREATE TABLE departmentSalary (
-		id SERIAL PRIMARY KEY,
-		employeeName VARCHAR(50),
-		departmentName VARCHAR(50),
-		salary BIGINT
-	);
+$ $ 
+
+--2. TABLE departmentSalary
+CREATE TABLE departmentSalary (
+	id SERIAL PRIMARY KEY,
+	employeeName VARCHAR(50),
+	departmentName VARCHAR(50),
+	salary BIGINT
+);
+
+DROP TABLE departmentSalary
+DELETE FROM
+	public.departmentSalary;
 
 DO $ $ BEGIN FOR i in 1..10000 LOOP
 INSERT INTO
@@ -100,14 +111,19 @@ END LOOP;
 
 END;
 
---3.
-$ $ drop TABLE departmentLocation
-DELETE from
-	public.departmentLocation CREATE TABLE departmentLocation (
-		id SERIAL PRIMARY KEY,
-		departmentName VARCHAR(50),
-		location VARCHAR(100)
-	);
+$ $ 
+
+--3. TABLES departmentLocation & departmentEmployee
+DROP TABLE departmentLocation;
+
+DELETE FROM
+	public.departmentLocation;
+
+CREATE TABLE departmentLocation (
+	id SERIAL PRIMARY KEY,
+	departmentName VARCHAR(50),
+	location VARCHAR(100)
+);
 
 DO $ $ BEGIN FOR i in 1..10000 LOOP
 INSERT INTO
@@ -161,7 +177,12 @@ END LOOP;
 
 END;
 
-$ $ CREATE TABLE departmentEmployee (
+$ $ DROP TABLE departmentEmployee;
+
+DELETE FROM
+	public.departmentEmployee;
+
+CREATE TABLE departmentEmployee (
 	id SERIAL PRIMARY KEY,
 	employeeName VARCHAR(50),
 	departmentId INTEGER REFERENCES departmentLocation(id)
