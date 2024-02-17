@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-
 public class BaseWorker {
 
     static final String DB_URL = "jdbc:postgresql://localhost:5432/postgres";
@@ -39,17 +38,17 @@ public class BaseWorker {
         return connection;
 
     }
-    
-    public static void printData(ResultSet data){
-        try{
-        DBTablePrinter.printResultSet(data);
-        } catch (Exception e){
+
+    public static void printData(ResultSet data) {
+        try {
+            DBTablePrinter.printResultSet(data);
+        } catch (Exception e) {
             System.out.println(false);
         }
     }
 
     public static void executeQuiery(Connection con, String quiery) throws SQLException {
-        
+
         Statement stmt = con.createStatement();
         ResultSet rs = stmt.executeQuery(quiery);
         printData(rs);
@@ -67,33 +66,33 @@ public class BaseWorker {
             connection.setAutoCommit(true);
         } catch (SQLException e) {
         }
-        
+
         final String firstQuiery = """
-            SELECT * FROM 
-                public.employeesAge
-            WHERE 
-                employeesAge.age > 20 
-            LIMIT 10;
-                """;
+                SELECT * FROM
+                    public.employeesAge
+                WHERE
+                    employeesAge.age > 20
+                LIMIT 10;
+                    """;
 
         final String secondQuiery = """
-            SELECT departmentname, round(AVG(salary), 2)::real as "Average salary" FROM 
-                public.departmentsalary
-            GROUP BY departmentname;
-                """;
+                SELECT departmentname, round(AVG(salary), 2)::real as "Average salary" FROM
+                    public.departmentsalary
+                GROUP BY departmentname;
+                    """;
 
         final String thirdQuiery = """
-            SELECT public.departmentemployee.employeename, 
-                    public.departmentlocation.departmentname, 
-                    public.departmentlocation.location
-            FROM 
-                public.departmentemployee
-            INNER JOIN
-                public.departmentlocation
-            ON 
-                public.departmentemployee.departmentid = public.departmentlocation.id
-            LIMIT 100;
-                """;
+                SELECT public.departmentemployee.employeename,
+                        public.departmentlocation.departmentname,
+                        public.departmentlocation.location
+                FROM
+                    public.departmentemployee
+                INNER JOIN
+                    public.departmentlocation
+                ON
+                    public.departmentemployee.departmentid = public.departmentlocation.id
+                LIMIT 100;
+                    """;
 
         try {
             BaseWorker.executeQuiery(connection, firstQuiery);
@@ -102,7 +101,7 @@ public class BaseWorker {
             connection.close();
         } catch (SQLException e) {
         }
-        
+
     }
 
 }
