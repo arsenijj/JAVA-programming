@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+
 public class BaseWorker {
 
     static final String DB_URL = "jdbc:postgresql://localhost:5432/postgres";
@@ -38,19 +39,20 @@ public class BaseWorker {
         return connection;
 
     }
-
-    public static void select(Connection con) throws SQLException {
-        Statement stmt = con.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM departmentEmployee LIMIT 10;");
-
-        while (rs.next()) {
-            // String str =
-            for (int i = 1; i < rs.getMetaData().getColumnCount(); i++) {
-
-                System.out.printf("%-20s", rs.getString(i));
-            }
+    
+    public static void printData(ResultSet data){
+        try{
+        DBTablePrinter.printResultSet(data);
+        } catch (Exception e){
+            System.out.println(false);
         }
-        rs.close();
+    }
+
+    public static void executeQuiery(Connection con, String quiery) throws SQLException {
+        
+        Statement stmt = con.createStatement();
+        ResultSet rs = stmt.executeQuery(quiery);
+        printData(rs);
         stmt.close();
     }
 
@@ -60,17 +62,47 @@ public class BaseWorker {
         if (connection == null) {
             return;
         }
+
         try {
             connection.setAutoCommit(true);
         } catch (SQLException e) {
         }
+        
+        final String firstQuiery = """
+            SELECT * FROM 
+                public.employeesAge
+            WHERE 
+                employeesAge.age > 20 
+            LIMIT 10;
+                """;
+
+        final String secondQuiery = """
+            SELECT departmentname, round(AVG(salary), 2)::real as "Average salary" FROM 
+                public.departmentsalary
+            GROUP BY departmentname;
+                """;
+
+        final String thirdQuiery = """
+            SELECT public.departmentemployee.employeename, 
+                    public.departmentlocation.departmentname, 
+                    public.departmentlocation.location
+            FROM 
+                public.departmentemployee
+            INNER JOIN
+                public.departmentlocation
+            ON 
+                public.departmentemployee.departmentid = public.departmentlocation.id
+            LIMIT 100;
+                """;
+
         try {
-            BaseWorker.select(connection);
+            BaseWorker.executeQuiery(connection, firstQuiery);
+            BaseWorker.executeQuiery(connection, secondQuiery);
+            BaseWorker.executeQuiery(connection, thirdQuiery);
+            connection.close();
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
-        System.out.println("Success!!");
+        
     }
 
 }

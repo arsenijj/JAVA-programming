@@ -13,8 +13,9 @@ DELETE FROM
 	public.employeesAge;
 
 DO 
+$$ 
 
-$ $ BEGIN FOR i in 1..10000 LOOP
+BEGIN FOR i in 1..10000 LOOP
 INSERT INTO
 	employeesAge (employeeName, age)
 SELECT
@@ -45,7 +46,7 @@ END LOOP;
 
 END;
 
-$ $ 
+$$ 
 
 --2. TABLE departmentSalary
 CREATE TABLE departmentSalary (
@@ -59,7 +60,10 @@ DROP TABLE departmentSalary
 DELETE FROM
 	public.departmentSalary;
 
-DO $ $ BEGIN FOR i in 1..10000 LOOP
+DO 
+$$ 
+
+BEGIN FOR i in 1..10000 LOOP
 INSERT INTO
 	departmentSalary (employeeName, departmentName, salary)
 SELECT
@@ -111,7 +115,7 @@ END LOOP;
 
 END;
 
-$ $ 
+$$ 
 
 --3. TABLES departmentLocation & departmentEmployee
 DROP TABLE departmentLocation;
@@ -125,7 +129,10 @@ CREATE TABLE departmentLocation (
 	location VARCHAR(100)
 );
 
-DO $ $ BEGIN FOR i in 1..10000 LOOP
+DO 
+$$ 
+
+BEGIN FOR i in 1..10000 LOOP
 INSERT INTO
 	departmentLocation (location, departmentName)
 SELECT
@@ -177,7 +184,9 @@ END LOOP;
 
 END;
 
-$ $ DROP TABLE departmentEmployee;
+$$ 
+
+DROP TABLE departmentEmployee;
 
 DELETE FROM
 	public.departmentEmployee;
@@ -188,7 +197,10 @@ CREATE TABLE departmentEmployee (
 	departmentId INTEGER REFERENCES departmentLocation(id)
 );
 
-DO $ $ BEGIN FOR i in 1..10000 LOOP
+DO 
+$$ 
+
+BEGIN FOR i in 1..10000 LOOP
 INSERT INTO
 	departmentEmployee (employeeName, departmentId)
 SELECT
@@ -228,4 +240,4 @@ END LOOP;
 
 END;
 
-$ $
+$$
