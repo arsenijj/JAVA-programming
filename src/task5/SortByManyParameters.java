@@ -24,7 +24,7 @@ public class SortByManyParameters {
         }
     };
 
-    public static void write(String path, Set<ArrayList<String>> data) {
+    public void write(String path, Set<ArrayList<String>> data) {
         try (FileWriter writer = new FileWriter(path)) {
             for (ArrayList<String> row : data) {
                 for (String item : row) {
@@ -43,6 +43,7 @@ public class SortByManyParameters {
         FileChooser choser = new FileChooser();
         BufferedReader bf = new BufferedReader(new FileReader(choser.choser()));
         ArrayList<ArrayList<String>> data = new ArrayList<>();
+        SortByManyParameters sortByManyParameters = new SortByManyParameters();
         try {
 
             String line = bf.readLine();
@@ -77,7 +78,7 @@ public class SortByManyParameters {
         Collections.sort(data, sr.comparator);
         Set<ArrayList<String>> a = new LinkedHashSet<ArrayList<String>>(data);
         String path = choser.chosen.replace(".txt", "_sorted.txt");
-        write(path, a);
+        sortByManyParameters.write(path, a);
         System.out.println(data.getClass());
     }
 

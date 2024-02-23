@@ -4,9 +4,9 @@ import javax.swing.JFileChooser;
 
 public class DirectoryChooser {
 
-    private static String chosen;
+    private String chosen;
 
-    public static String choser() {
+    public String choser() {
         
         JFileChooser chooser = new JFileChooser();
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
