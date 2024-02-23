@@ -8,11 +8,11 @@ import java.sql.Statement;
 
 public class BaseWorker {
 
-    private String DB_URL = "jdbc:postgresql://localhost:5432/postgres";
-    private String USER = "postgres";
-    private String PASS = "password";
+    private final String DB_URL = "jdbc:postgresql://localhost:5432/postgres";
+    private final String USER = "postgres";
+    private final String PASS = "password";
 
-    public static Connection makeConnection() throws SQLException {
+    public Connection makeConnection(){
 
         System.out.println("Testing connection to PostgreSQL JDBC");
 
@@ -20,14 +20,18 @@ public class BaseWorker {
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
             System.out.println("PostgreSQL JDBC Driver is not found. Include it in your library path ");
-            return null;
+            e.printStackTrace();
         }
 
         System.out.println("PostgreSQL JDBC Driver successfully connected");
 
         Connection connection = null;
         BaseWorker base = new BaseWorker();
-        connection = DriverManager.getConnection(base.DB_URL, base.USER, base.PASS);
+        try {
+            connection = DriverManager.getConnection(base.DB_URL, base.USER, base.PASS);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         System.out.println("You successfully connected to database now");
         return connection;
 
@@ -51,10 +55,8 @@ public class BaseWorker {
 
     public static void main(String[] argv) throws SQLException {
 
-        Connection connection = makeConnection();
-        if (connection == null) {
-            return;
-        }
+        BaseWorker baseWorker = new BaseWorker();
+        Connection connection = baseWorker.makeConnection();
 
         connection.setAutoCommit(true);
 
