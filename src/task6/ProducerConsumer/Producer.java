@@ -15,7 +15,7 @@ public class Producer implements Runnable {
         try {
             while (true) {
                 Random random = new Random();
-                Thread.sleep((random.nextInt(5) + 1) * 1000); // Случайная задержка от 1 до 5 секунд
+                Thread.sleep((random.nextInt(5) + 1) * 1000);
                 int randomIndex = random.nextInt(6);
                 switch (randomIndex) {
                     case 0:
